@@ -40,7 +40,17 @@ public class Demo {
 //            deleteTeacher(3);
 //            assignCoursesToTeacher();
 //        retrieveStudentsOfTeacher(2);
-        retriveTeachersofStudent(6);
+       // retriveTeachersofStudent(6);
+
+
+          //Ammar
+//      retriveStusentsOfCourse(3);
+//      checkIfStudentStudyCourse(1,3);
+//      addCourse("SRE","568");
+//      updateCourseDetails(3,"urdu","687");
+//      removeCourseOfStudent(1,2);
+//
+        assignCourseToStudent(4,3);
         }
 
 
@@ -287,5 +297,75 @@ public class Demo {
         session.getTransaction().commit();
 
     }
-}
 
+
+    public static void retriveStusentsOfCourse(int course_id){
+
+        session.beginTransaction();
+        Courses course=session.get(Courses.class,course_id);
+
+        List<Student> students = course.getStudents();
+
+        System.out.println("Students of Course are: "+students);
+
+    }
+    public static void checkIfStudentStudyCourse(int student_id,int course_id){
+
+        session.beginTransaction();
+        Student student=session.get(Student.class,student_id);
+        Courses course = session.get(Courses.class,course_id);
+        if(student.getCourses().contains(course)){
+            System.out.println("Student Study this Course");
+        }else {
+            System.out.println("Student don't study this course");
+        }
+
+    }
+
+
+    public static  void addCourse(String name,String code){
+        session.beginTransaction();
+
+        Courses course = new Courses();
+        course.setName(name);
+        course.setCode(code);
+        session.save(course);
+        session.getTransaction().commit();
+        System.out.println("Course Added");
+    }
+
+    public static void updateCourseDetails(int course_id,String name,String code){
+        session.beginTransaction();
+
+        Courses course = session.get(Courses.class,course_id);
+        course.setName(name);
+        course.setCode(code);
+        session.getTransaction().commit();
+
+    }
+
+    public static void removeCourseOfStudent(int course_id,int student_id){
+        session.beginTransaction();
+        Student student=session.get(Student.class,student_id);
+        Courses course=session.get(Courses.class,course_id);
+
+        List<Courses> courses = student.getCourses();
+        courses.remove(course);
+        student.setCourses(courses);
+        session.getTransaction().commit();
+
+    }
+
+    public static void assignCourseToStudent(int course_id,int student_id){
+
+        session.beginTransaction();
+
+        Student student  = session.get(Student.class,student_id);
+        Courses course = session.get(Courses.class,course_id);
+        course.addStudent(student);
+        session.getTransaction().commit();
+
+
+    }
+
+}
