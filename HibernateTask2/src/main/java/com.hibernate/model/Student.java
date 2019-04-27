@@ -1,6 +1,7 @@
 package com.hibernate.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,6 +30,30 @@ public class Student {
     )
     private List<Courses> courses;
 
+
+    public void addCourses(Courses cs){
+        if (courses==null){
+            courses=new ArrayList<>();
+        }
+        courses.add(cs);
+    }
+
+    public void removeCourses(Courses cs){
+        if(courses!=null && cs!=null){
+            courses.remove(cs);
+        }
+    }
+
+    @OneToOne(mappedBy = "student",cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+    private Addresses addresses;
+
+    public Addresses getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(Addresses addresses) {
+        this.addresses = addresses;
+    }
 
     @Override
     public String toString() {

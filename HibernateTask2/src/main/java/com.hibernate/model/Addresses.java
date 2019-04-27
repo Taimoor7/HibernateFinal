@@ -34,10 +34,6 @@ public class Addresses {
     @JoinColumn(name = "sid")
     private Student student;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "tid")
-//    private Teacher teacher;
-
     @Override
     public String toString() {
         return "Addresses{" +
@@ -45,7 +41,7 @@ public class Addresses {
                 ", city='" + city + '\'' +
                 ", street='" + street + '\'' +
                 ", country='" + country + '\'' +
-                ", student=" + student +
+//                ", student=" + student +
 //                ", teacher=" + teacher +
                 '}';
     }
