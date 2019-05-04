@@ -7,7 +7,6 @@ import org.hibernate.cfg.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 
 public class Demo {
@@ -51,22 +50,24 @@ public class Demo {
 //      removeCourseOfStudent(1,2);
 //
         assignCourseToStudent(4,3);
+//        addOnlyStudent();
+//        addOnlyAddresse();
+//        addStudentTOAddress();
+//    addAddreessTOStudent();
+//        retrieveStudent();
+//  retrieveStudentTOAddress();
+//          deleteOnlyStudent();
+//            deleteOnlyAddress();
+//        deleteStudentToAddress();
+//            updateStudent();
+//          addStudenttoCourse();
+//deleteStudentofCourse();
+            updateCourseofStudent();
         }
-
-
         finally {
             session.close();
             factory.close();
         }
-
-
-
-
-
-
-
-
-
     }
 
 
@@ -85,8 +86,6 @@ public class Demo {
 
         System.out.println("Course Deleted: "+course);
     }
-
-
     public static void addCourseAndAssignToTeacher(){
 //ManytoOne  relation example Courses and Teacher (Adding Courses)
 
@@ -137,7 +136,6 @@ public class Demo {
 
 
     }
-
     //ManytoMAny mapping retriving courses of given student
     public static void retrieveCoursesofStudent(int student_id){
 
@@ -148,7 +146,6 @@ public class Demo {
         System.out.println("Courses are :"+student.getCourses());
         session.getTransaction().commit();
     }
-
     //ManytoMAny mapping retrieving students of given courses
     public static void retrieveStudentsofCourse(int course_id){
 
@@ -160,7 +157,6 @@ public class Demo {
         System.out.println("Teacher is:"+course.getTeacher());
         session.getTransaction().commit();
     }
-
     public static void getTeacherOfCourse(int course_id){
         session.beginTransaction();
         Courses course=session.get(Courses.class,course_id);
@@ -168,8 +164,6 @@ public class Demo {
         System.out.println("Teacher is:"+course.getTeacher());
 
     }
-
-
     //ManytoMany mapping :adding a course and assigning the that course to a new Student
     public static void newClass(){
         session.beginTransaction();
@@ -199,8 +193,6 @@ public class Demo {
         System.out.println("Class Created");
         session.getTransaction().commit();
     }
-
-
     public static void updateTeacherofCourse(int course_id){
         session.beginTransaction();
 
@@ -215,7 +207,6 @@ public class Demo {
             session.getTransaction().commit();
 
         }
-
     public static void addTeacher(){
         session.beginTransaction();
         Teacher teacher=new Teacher("Mr Waqas","Azam");
@@ -223,8 +214,6 @@ public class Demo {
         session.getTransaction().commit();
 
     }
-
-
     public static void deleteTeacher(int teacher_id){
         session.beginTransaction();
         Teacher teacher=session.get(Teacher.class,teacher_id);
@@ -240,7 +229,6 @@ public class Demo {
         session.getTransaction().commit();
 
     }
-
     public static void assignCoursesToTeacher(){
         session.beginTransaction();
         Courses course1=new Courses("SQE","CS107");
@@ -255,7 +243,6 @@ public class Demo {
         session.getTransaction().commit();
 
     }
-
     public static void removeTeacherFromCourse(int course_id){
 
         session.beginTransaction();
@@ -263,7 +250,6 @@ public class Demo {
         course.setTeacher(null);
         session.getTransaction().commit();
     }
-
     public static void retrieveStudentsOfTeacher(int teacher_id){
 
         session.beginTransaction();
@@ -279,7 +265,6 @@ public class Demo {
         session.getTransaction().commit();
 
     }
-
     public static void retriveTeachersofStudent(int student_id){
 
         session.beginTransaction();
@@ -295,8 +280,229 @@ public class Demo {
 
         System.out.println("Teachers are :"+teachers);
         session.getTransaction().commit();
+    }
+    //Method to add Only Student :Azhar:
+    public static void addOnlyStudent(){
+        Student student=new Student("Ali","Mahmood");
+
+        session.beginTransaction();
+
+        session.save(student);
+        session.getTransaction().commit();
+    }
+    //Method to add Only Address :Azhar:
+    public static void addOnlyAddresse(){
+
+        //Creating Addresses Object
+        Addresses addressesObject=new Addresses("Lahore","NaseeraAbad","Pakistan");
+        //Starting Transaction
+        session.beginTransaction();
+        //Saving Object into Database
+        session.save(addressesObject);
+        session.getTransaction().commit();
+    }
+    //Method to add Student References Address Unidirectional :Azhar:
+    public static void addStudentTOAddress(){
+        //Creating Student Object
+        Student student=new Student("Rana","Azhar");
+
+        //Creating Addresses Object
+        Addresses addressesObject=new Addresses("Lahore","NaseeraAbad","Pakistan");
+
+        //Set Address into Student
+        addressesObject.setStudent(student);
+
+        //Starting Transaction
+        session.beginTransaction();
+
+        //Saving Object into Database
+        session.save(addressesObject);
+
+        session.getTransaction().commit();
+    }
+    //Method to add Student References Address BiDirection :Azhar:
+    public static void addAddreessTOStudent(){
+        //Creating Student Object
+        Student student=new Student("Rana","Azhar");
+
+        //Creating Addresses Object
+        Addresses addressesObject=new Addresses("Lahore","NaseeraAbad","Pakistan");
+
+        //Set Student into Address
+        student.setAddresses(addressesObject);
+        //Starting Transaction
+        session.beginTransaction();
+
+        //Saving Object into Database
+        session.save(student);
+
+        session.getTransaction().commit();
+    }
+    //Method to GET Student References Address Bidirectional :Azhar:
+    public static void retrieveStudentTOAddress(){
+
+
+        //Starting Transaction
+        session.beginTransaction();
+        //retrieve Address
+        Addresses addresses=session.get(Addresses.class,1);
+
+        //Print Address
+        System.out.println(addresses.toString());
+
+        //print student throught address
+        System.out.println(addresses.getStudent());
+
+        session.getTransaction().commit();
+    }
+    //Method to Delete Only Student  :Azhar:
+    public static void deleteOnlyStudent(){
+
+
+        //Starting Transaction
+        session.beginTransaction();
+
+        //retrieve Student Object from database
+        Student student=session.get(Student.class,4);
+
+        //Print Student
+        System.out.println(student.toString());
+        student.getAddresses().setStudent(null);
+        //delete Student
+        session.delete(student);
+        session.getTransaction().commit();
+    }
+    //Method to Delete Only Address  :Azhar:
+    public static void deleteOnlyAddress(){
+
+
+        //Starting Transaction
+        session.beginTransaction();
+
+        //retrieve Student Object from database
+        Addresses addresses=session.get(Addresses.class,10);
+
+
+        //Print Student
+        System.out.println(addresses.toString());
+
+        addresses.getStudent().setAddresses(null);
+
+        //delete Student
+        session.delete(addresses);
+        session.getTransaction().commit();
+    }
+
+
+    //Method to Delete Student to Address :Azhar:
+    //Only When in student Set Address Cascade Type to All
+    public static void deleteStudentToAddress(){
+
+
+        //Starting Transaction
+        session.beginTransaction();
+
+        //retrieve Student Object from database
+        Student student=session.get(Student.class,2);
+
+        //Print Student
+        System.out.println(student.toString());
+        System.out.println(student.getAddresses());
+
+        //delete Student
+        session.delete(student);
+        session.getTransaction().commit();
+    }
+
+    //Method to update Student :Azhar:
+    public static void updateStudent(){
+        //Start session
+        session.beginTransaction();
+
+        //retrieve Student Object
+        Student student=session.get(Student.class,2);
+
+        //Set Student value ---Updating
+        student.setFirst_name("Muhammad");
+        student.setLast_name("Ali");
+
+        session.getTransaction().commit();
 
     }
+    //Method to add Student to Course only student :Azhar:
+    private static void addStudenttoCourse() {
+        session.beginTransaction();
+
+        //Creating Student object
+        Student student=new Student("Azhar","Mahmood");
+        //Saving Student object
+        session.save(student);
+        //Creating Courses objects
+        Courses courses1=new Courses("JavaWithApi","3321");
+        Courses courses2=new Courses("Angular7 with Spring","3322");
+
+        //Adding Courses to student
+        student.addCourses(courses1);
+        student.addCourses(courses2);
+
+        //Saving Courses object
+        session.save(courses1);
+        session.save(courses2);
+
+
+        session.getTransaction().commit();
+    }
+    //Method to retreive only student :Azhar:
+    private static void retrieveStudent() {
+        //start transaction
+        session.beginTransaction();
+
+        //Retrieve object
+        Student student=session.get(Student.class,2);
+
+        //print student
+        System.out.println(student.toString());
+
+        session.getTransaction().commit();
+
+    }
+    //method to delete Only Student not course :Azhar:
+    private static void deleteStudentofCourse() {
+        session.beginTransaction();
+
+        //Getting Student object
+        Student student=session.get(Student.class,10);
+        //print student
+        System.out.println(student.toString());
+        //print courses
+        System.out.println(student.getCourses());
+        session.delete(student);
+        session.getTransaction().commit();
+
+    }
+    //Method to update course of student       :Azhar:
+    private static void updateCourseofStudent() {
+
+        session.beginTransaction();
+        //Getting Student Object
+        Student student=session.get(Student.class,11);
+
+        //Creating COurses object
+        Courses courses=new Courses("SpringMVC with Java","1234");
+
+        //Adding COurses
+        student.addCourses(courses);
+
+        //Saving COurse
+        session.save(courses);
+
+        //Getting course and Removing it from student
+        student.removeCourses(session.get(Courses.class,3));
+
+        session.getTransaction().commit();
+    }
+
+}
 
 
     public static void retriveStusentsOfCourse(int course_id){
