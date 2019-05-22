@@ -26,7 +26,7 @@ public class Demo {
 
 
         try {
-//        addOnlyStudent();
+        addOnlyStudent();
 //        addOnlyAddresse();
 //        addStudentTOAddress();
 //    addAddreessTOStudent();
@@ -38,7 +38,7 @@ public class Demo {
 //            updateStudent();
 //          addStudenttoCourse();
 //deleteStudentofCourse();
-            updateCourseofStudent();
+//            updateCourseofStudent();
         }
         finally {
             session.close();
